@@ -1,0 +1,23 @@
+[project]
+name = "trl-jobs"
+version = "0.1.0"
+description = "TRL-specific job runner built on hfjobs"
+authors = [
+    {name = "Quentin Gallouédec", email = "quentin.gallouedec@huggingface.co"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "hfjobs>=0.6.0",
+]
+
+[project.scripts]
+trl-jobs = 'trl_jobs.cli:main'
+
+[project.urls]
+Homepage = "https://github.com/qgallouedec/trl-jobs"
+Repository = "https://github.com/qgallouedec/trl-jobs"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
