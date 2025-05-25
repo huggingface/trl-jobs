@@ -1,7 +1,7 @@
-from abc import ABC, abstractmethod
-from argparse import _SubParsersAction, Namespace
 import subprocess
 import sys
+from abc import ABC, abstractmethod
+from argparse import Namespace, _SubParsersAction
 
 
 class BaseTRLCommand(ABC):

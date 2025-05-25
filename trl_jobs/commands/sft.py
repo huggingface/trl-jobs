@@ -1,7 +1,15 @@
-from argparse import _SubParsersAction, Namespace
-from typing import List
+import json
+from argparse import Namespace, _SubParsersAction
+from importlib.resources import files
+
+import yaml
+from huggingface_hub.utils import get_token_to_send
 
 from .base import BaseTRLCommand
+
+CONFIGS = {
+    ("Qwen/Qwen2.5-0.5B", "t4-small"): "Qwen2.5-0.5B-t4-small.yaml",
+}
 
 
 class SFTCommand(BaseTRLCommand):
@@ -51,6 +59,32 @@ class SFTCommand(BaseTRLCommand):
         self.model = args.model
         self.dataset = args.dataset
 
-    def get_command_args(self) -> List[str]:
+    def get_command_args(self) -> list[str]:
         """Build the SFT command arguments."""
-        return ["sft", "--model", self.model, "--dataset", self.dataset]
+        # Check if the requested configuration exists
+        if (self.model, self.flavor) in CONFIGS:
+            config_file = CONFIGS[(self.model, self.flavor)]
+        else:
+            raise ValueError(
+                f"No configuration file found for model {self.model} and flavor {self.flavor}"
+            )
+
+        # Load YAML file
+        config_file = files("trl_jobs.configs").joinpath(config_file)
+        with open(config_file, "r") as f:
+            args_dict = yaml.safe_load(f)
+
+        # Convert to CLI-style args, ensuring complex structures are JSON-encoded
+        cli_args = []
+        for k, v in args_dict.items():
+            if isinstance(v, (dict, list, bool, type(None))):
+                # Serialize complex types and booleans to JSON-compatible format
+                v_str = json.dumps(v)
+            else:
+                v_str = str(v)
+            cli_args.extend([f"--{k}", v_str])
+
+        # Get the token
+        token = get_token_to_send(self.token)
+
+        return ["trl", "sft"] + cli_args + ["--hub_token", token]

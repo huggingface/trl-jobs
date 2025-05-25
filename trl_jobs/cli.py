@@ -3,8 +3,8 @@
 TRL Jobs CLI - A wrapper around hfjobs for TRL-specific workflows.
 """
 
-from argparse import ArgumentParser
 import sys
+from argparse import ArgumentParser
 
 from .commands.sft import SFTCommand
 
@@ -12,11 +12,15 @@ from .commands.sft import SFTCommand
 def main():
     """Main entry point for trl-jobs CLI."""
     parser = ArgumentParser(
-        "trl-jobs", description="TRL-specific job runner built on hfjobs", usage="trl-jobs <command> [<args>]"
+        "trl-jobs",
+        description="TRL-specific job runner built on hfjobs",
+        usage="trl-jobs <command> [<args>]",
     )
 
     # Create subparsers for different commands
-    commands_parser = parser.add_subparsers(title="Available commands", help="TRL job types", dest="command")
+    commands_parser = parser.add_subparsers(
+        title="Available commands", help="TRL job types", dest="command"
+    )
 
     # Register all commands
     SFTCommand.register_subcommand(commands_parser)
