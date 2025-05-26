@@ -8,7 +8,7 @@ from huggingface_hub.utils import get_token_to_send
 from .base import BaseTRLCommand
 
 CONFIGS = {
-    ("Qwen/Qwen2.5-0.5B", "t4-small"): "Qwen2.5-0.5B-t4-small.yaml",
+    ("Qwen/Qwen3-0.6B", "t4-small"): "Qwen3-0.6B-t4-small.yaml",
 }
 
 
