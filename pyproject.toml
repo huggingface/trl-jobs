@@ -25,7 +25,7 @@ homepage = "https://github.com/qgallouedec/trl-jobs"
 repository = "https://github.com/qgallouedec/trl-jobs"
 
 [project.scripts]
-trackio = "trl_jobs.cli:main"
+trl-jobs = "trl_jobs.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["trl_jobs"]
