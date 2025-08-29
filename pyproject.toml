@@ -29,15 +29,18 @@ trl-jobs = "trl_jobs.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["trl_jobs"]
-
-[tool.hatch.build]
 include = [
   "trl_jobs/configs/*.yaml",
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "trl_jobs",
+  "README.md",
+  "pyproject.toml",
 ]
 
 [tool.hatch.version]
 path = "trl_jobs/version.txt"
 pattern = "^(?P<version>[0-9]+\\.[0-9]+\\.[0-9]+)$"
 
-[tool.setuptools.package-data]
-"trl_jobs.configs" = ["*.yaml"]
