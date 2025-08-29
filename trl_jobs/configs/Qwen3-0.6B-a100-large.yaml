@@ -26,9 +26,10 @@ lr_scheduler_kwargs:
   min_lr_rate: 0.1
 packing: false
 max_grad_norm: 0.2
-max_length: 128
+max_length: 512
 max_steps: -1
-num_train_epochs: 10
+# num_train_epochs: 10
+max_steps: 1000
 output_dir: data/Qwen3-0.6B-SFT
 overwrite_output_dir: true
 per_device_eval_batch_size: 1
@@ -38,5 +39,5 @@ report_to: none
 save_strategy: epoch
 save_total_limit: 1
 seed: 42
-use_liger_kernel: true
+# use_liger_kernel: true
 warmup_ratio: 0.03
