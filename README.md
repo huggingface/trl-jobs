@@ -15,37 +15,19 @@ pip install trl-jobs
 Run SFT job with ease:
 
 ```bash
-trl-jobs sft --model MODEL_NAME --dataset DATASET_NAME [OPTIONS]
+trl-jobs sft --flavor a100-large --model Qwen/Qwen3-0.6B --dataset trl-lib/Capybara
 ```
 
 #### Required Arguments
 
-- `--model`: Model name or path (e.g., `Qwen/Qwen3-4B-Base`)
-- `--dataset`: Dataset name or path (e.g., `trl-lib/tldr`)
+- `--model`: Model name or path (e.g., `Qwen/Qwen3-0.6B`)
+- `--dataset`: Dataset name or path (e.g., `trl-lib/Capybara`)
 
 #### Optional Arguments
 
 - `--flavor`: Hardware flavor (default: `t4-small`)
 - `-d, --detach`: Run job in background and print job ID
 - `--token`: Hugging Face access token
-
-#### Examples
-
-```bash
-trl-jobs sft \
-    --model Qwen/Qwen3-4B-Base \
-    --dataset trl-lib/tldr
-```
-
-## Hardware Flavors
-
-Common hardware flavors you can use:
-
-- `t4-small`: NVIDIA T4 GPU (default)
-- `t4-medium`: NVIDIA T4 GPU with more resources
-- `a10g-small`: NVIDIA A10G GPU
-- `a10g-large`: NVIDIA A10G GPU with more resources
-- `a100-large`: NVIDIA A100 GPU
 
 ## Authentication
 
