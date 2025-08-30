@@ -1,4 +1,5 @@
 import json
+import time
 from argparse import ArgumentParser, Namespace, _SubParsersAction
 from importlib.resources import files
 from typing import Optional
@@ -14,6 +15,7 @@ SUGGESTED_FLAVORS = [item.value for item in SpaceHardware if item.value != "zero
 
 CONFIGS = {
     ("Qwen/Qwen3-0.6B", "a100-large"): "Qwen3-0.6B-a100-large.yaml",
+    ("Qwen/Qwen3-1.7B", "a100-large"): "Qwen3-1.7B-a100-large.yaml",
 }
 
 
@@ -23,8 +25,9 @@ class SFTCommand:
         sft_parser = parser.add_parser("sft", help="Run a Job")
         sft_parser.add_argument(
             "--flavor",
+            default="a100-large",
             type=str,
-            help=f"Flavor for the hardware, as in HF Spaces. Defaults to `cpu-basic`. Possible values: {', '.join(SUGGESTED_FLAVORS)}.",
+            help=f"Flavor for the hardware, as in HF Spaces. Defaults to `a100-large`. Possible values: {', '.join(SUGGESTED_FLAVORS)}.",
         )
         sft_parser.add_argument(
             "--timeout",
@@ -53,12 +56,6 @@ class SFTCommand:
             required=True,
             help="Model name or path (e.g., Qwen/Qwen3-4B-Base)",
         )
-        sft_parser.add_argument(
-            "--dataset",
-            type=str,
-            required=True,
-            help="Dataset name or path (e.g., trl-lib/tldr)",
-        )
         sft_parser.set_defaults(func=SFTCommand)
 
     def __init__(self, args: Namespace, extra_args: list[str]) -> None:
@@ -68,7 +65,6 @@ class SFTCommand:
         self.namespace: Optional[str] = args.namespace
         self.token: Optional[str] = args.token
         self.model: str = args.model
-        self.dataset: str = args.dataset
 
         # Check if the requested configuration exists
         if (self.model, self.flavor) in CONFIGS:
@@ -82,6 +78,22 @@ class SFTCommand:
         config_file = files("trl_jobs.configs").joinpath(config_file)
         with open(config_file, "r") as f:
             args_dict = yaml.safe_load(f)
+
+        # Add our own hub_model_id to avoid overwriting a previously trained model
+        if "hub_model_id" not in args_dict:
+            timestamp = time.strftime("%Y%m%d%H%M%S", time.gmtime())
+            if self.namespace:
+                args_dict["hub_model_id"] = (
+                    f"{self.namespace}/{self.model.split('/')[-1]}-SFT-{timestamp}"
+                )
+            else:
+                args_dict["hub_model_id"] = (
+                    f"{self.model.split('/')[-1]}-SFT-{timestamp}"
+                )
+
+        # Same for run_name
+        if "run_name" not in args_dict:
+            args_dict["run_name"] = f"{self.model.split('/')[-1]}-SFT-{timestamp}"
 
         # Parse extra_args into a dictionary
         overrides = {}
