@@ -15,13 +15,13 @@ pip install trl-jobs
 Run SFT job with ease:
 
 ```bash
-trl-jobs sft --flavor a100-large --model Qwen/Qwen3-0.6B --dataset trl-lib/Capybara
+trl-jobs sft --flavor a100-large --model_name Qwen/Qwen3-0.6B --dataset_name trl-lib/Capybara
 ```
 
 #### Required Arguments
 
-- `--model`: Model name or path (e.g., `Qwen/Qwen3-0.6B`)
-- `--dataset`: Dataset name or path (e.g., `trl-lib/Capybara`)
+- `--model_name`: Model name (e.g., `Qwen/Qwen3-0.6B`)
+- `--dataset_name`: Dataset name (e.g., `trl-lib/Capybara`)
 
 #### Optional Arguments
 

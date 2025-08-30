@@ -14,10 +14,11 @@ logger = logging.get_logger(__name__)
 SUGGESTED_FLAVORS = [item.value for item in SpaceHardware if item.value != "zero-a10g"]
 
 CONFIGS = {
-    ("Qwen/Qwen3-0.6B", "a100-large"): "Qwen3-0.6B-a100-large.yaml",
-    ("Qwen/Qwen3-1.7B", "a100-large"): "Qwen3-1.7B-a100-large.yaml",
-    ("Qwen/Qwen3-4B", "a100-large"): "Qwen3-4B-a100-large.yaml",
-    ("Qwen/Qwen3-8B", "a100-large"): "Qwen3-8B-a100-large.yaml",
+    ("Qwen/Qwen3-0.6B", "a100-large", "no_peft"): "Qwen3-0.6B-a100-large.yaml",
+    ("Qwen/Qwen3-1.7B", "a100-large", "no_peft"): "Qwen3-1.7B-a100-large.yaml",
+    ("Qwen/Qwen3-4B", "a100-large", "no_peft"): "Qwen3-4B-a100-large.yaml",
+    ("Qwen/Qwen3-8B", "a100-large", "no_peft"): "Qwen3-8B-a100-large.yaml",
+    ("Qwen/Qwen3-8B", "a100-large", "peft"): "Qwen3-8B-a100-large-peft.yaml",
 }
 
 
@@ -53,10 +54,15 @@ class SFTCommand:
             help="A User Access Token generated from https://huggingface.co/settings/tokens",
         )
         sft_parser.add_argument(
-            "--model",
+            "--model_name",
             type=str,
             required=True,
-            help="Model name or path (e.g., Qwen/Qwen3-4B-Base)",
+            help="Model name (e.g., Qwen/Qwen3-4B-Base)",
+        )
+        sft_parser.add_argument(
+            "--peft",
+            action="store_true",
+            help="Whether to use PEFT (LoRA) or not. Defaults to False.",
         )
         sft_parser.set_defaults(func=SFTCommand)
 
@@ -66,14 +72,16 @@ class SFTCommand:
         self.detach: bool = args.detach
         self.namespace: Optional[str] = args.namespace
         self.token: Optional[str] = args.token
-        self.model: str = args.model
+        self.model_name: str = args.model_name
+        self.peft: bool = args.peft
 
         # Check if the requested configuration exists
-        if (self.model, self.flavor) in CONFIGS:
-            config_file = CONFIGS[(self.model, self.flavor)]
+        key = (self.model_name, self.flavor, "peft" if self.peft else "no_peft")
+        if key in CONFIGS:
+            config_file = CONFIGS[key]
         else:
             raise ValueError(
-                f"No configuration file found for model {self.model} and flavor {self.flavor}"
+                f"No configuration file found for model {self.model_name}, flavor {self.flavor}, peft {self.peft}."
             )
 
         # Load YAML file
@@ -86,16 +94,16 @@ class SFTCommand:
             timestamp = time.strftime("%Y%m%d%H%M%S", time.gmtime())
             if self.namespace:
                 args_dict["hub_model_id"] = (
-                    f"{self.namespace}/{self.model.split('/')[-1]}-SFT-{timestamp}"
+                    f"{self.namespace}/{self.model_name.split('/')[-1]}-SFT-{timestamp}"
                 )
             else:
                 args_dict["hub_model_id"] = (
-                    f"{self.model.split('/')[-1]}-SFT-{timestamp}"
+                    f"{self.model_name.split('/')[-1]}-SFT-{timestamp}"
                 )
 
         # Same for run_name
         if "run_name" not in args_dict:
-            args_dict["run_name"] = f"{self.model.split('/')[-1]}-SFT-{timestamp}"
+            args_dict["run_name"] = f"{self.model_name.split('/')[-1]}-SFT-{timestamp}"
 
         # Parse extra_args into a dictionary
         overrides = {}
@@ -128,7 +136,7 @@ class SFTCommand:
     def run(self) -> None:
         api = HfApi(token=self.token)
         job = api.run_job(
-            image="qgallouedec/trl:dev",
+            image="qgallouedec/trl",
             command=["trl", "sft", *self.cli_args],
             secrets={"HF_TOKEN": get_token_to_send(self.token)},
             flavor=self.flavor,
