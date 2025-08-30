@@ -17,6 +17,7 @@ CONFIGS = {
     ("Qwen/Qwen3-0.6B", "a100-large"): "Qwen3-0.6B-a100-large.yaml",
     ("Qwen/Qwen3-1.7B", "a100-large"): "Qwen3-1.7B-a100-large.yaml",
     ("Qwen/Qwen3-4B", "a100-large"): "Qwen3-4B-a100-large.yaml",
+    ("Qwen/Qwen3-8B", "a100-large"): "Qwen3-8B-a100-large.yaml",
 }
 
 
