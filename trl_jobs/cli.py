@@ -1,4 +1,3 @@
-
 import json
 from argparse import ArgumentParser, Namespace, _SubParsersAction
 from importlib.resources import files
@@ -18,7 +17,7 @@ CONFIGS = {
 }
 
 
-class RunCommand:
+class SFTCommand:
     @staticmethod
     def register_subcommand(parser: _SubParsersAction) -> None:
         sft_parser = parser.add_parser("sft", help="Run a Job")
@@ -60,9 +59,9 @@ class RunCommand:
             required=True,
             help="Dataset name or path (e.g., trl-lib/tldr)",
         )
-        sft_parser.set_defaults(func=RunCommand)
+        sft_parser.set_defaults(func=SFTCommand)
 
-    def __init__(self, args: Namespace) -> None:
+    def __init__(self, args: Namespace, extra_args: list[str]) -> None:
         self.flavor: Optional[SpaceHardware] = args.flavor
         self.timeout: Optional[str] = args.timeout
         self.detach: bool = args.detach
@@ -84,11 +83,29 @@ class RunCommand:
         with open(config_file, "r") as f:
             args_dict = yaml.safe_load(f)
 
-        # Convert to CLI-style args, ensuring complex structures are JSON-encoded
+        # Parse extra_args into a dictionary
+        overrides = {}
+        i = 0
+        while i < len(extra_args):
+            if extra_args[i].startswith("--"):
+                key = extra_args[i][2:]
+                # handle flags without values (bools)
+                if i + 1 >= len(extra_args) or extra_args[i + 1].startswith("--"):
+                    overrides[key] = True
+                    i += 1
+                else:
+                    overrides[key] = extra_args[i + 1]
+                    i += 2
+            else:
+                i += 1
+
+        # Override YAML args with CLI args
+        merged = {**args_dict, **overrides}
+
+        # Rebuild CLI args
         self.cli_args = []
-        for k, v in args_dict.items():
+        for k, v in merged.items():
             if isinstance(v, (dict, list, bool, type(None))):
-                # Serialize complex types and booleans to JSON-compatible format
                 v_str = json.dumps(v)
             else:
                 v_str = str(v)
@@ -119,14 +136,14 @@ class RunCommand:
 def main():
     parser = ArgumentParser("trl-jobs", usage="hf <command> [<args>]")
     commands_parser = parser.add_subparsers(help="trl-jobs command helpers")
-    RunCommand.register_subcommand(commands_parser)
+    SFTCommand.register_subcommand(commands_parser)
 
-    args = parser.parse_args()
+    args, extra_args = parser.parse_known_args()
     if not hasattr(args, "func"):
         parser.print_help()
         exit(1)
 
-    service = args.func(args)
+    service = args.func(args, extra_args)
     if service is not None:
         service.run()
 
