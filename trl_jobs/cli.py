@@ -25,7 +25,18 @@ CONFIGS = {
 class SFTCommand:
     @staticmethod
     def register_subcommand(parser: _SubParsersAction) -> None:
-        sft_parser = parser.add_parser("sft", help="Run a Job")
+        sft_parser = parser.add_parser("sft", help="Run a SFT training job")
+        sft_parser.add_argument(
+            "--model_name",
+            type=str,
+            required=True,
+            help="Model name (e.g., Qwen/Qwen3-4B-Base)",
+        )
+        sft_parser.add_argument(
+            "--peft",
+            action="store_true",
+            help="Whether to use PEFT (LoRA) or not. Defaults to False.",
+        )
         sft_parser.add_argument(
             "--flavor",
             default="a100-large",
@@ -53,27 +64,16 @@ class SFTCommand:
             type=str,
             help="A User Access Token generated from https://huggingface.co/settings/tokens",
         )
-        sft_parser.add_argument(
-            "--model_name",
-            type=str,
-            required=True,
-            help="Model name (e.g., Qwen/Qwen3-4B-Base)",
-        )
-        sft_parser.add_argument(
-            "--peft",
-            action="store_true",
-            help="Whether to use PEFT (LoRA) or not. Defaults to False.",
-        )
         sft_parser.set_defaults(func=SFTCommand)
 
     def __init__(self, args: Namespace, extra_args: list[str]) -> None:
+        self.model_name: str = args.model_name
+        self.peft: bool = args.peft
         self.flavor: Optional[SpaceHardware] = args.flavor
         self.timeout: Optional[str] = args.timeout
         self.detach: bool = args.detach
         self.namespace: Optional[str] = args.namespace
         self.token: Optional[str] = args.token
-        self.model_name: str = args.model_name
-        self.peft: bool = args.peft
 
         # Check if the requested configuration exists
         key = (self.model_name, self.flavor, "peft" if self.peft else "no_peft")
@@ -156,8 +156,8 @@ class SFTCommand:
 
 
 def main():
-    parser = ArgumentParser("trl-jobs", usage="hf <command> [<args>]")
-    commands_parser = parser.add_subparsers(help="trl-jobs command helpers")
+    parser = ArgumentParser(prog="trl-jobs")
+    commands_parser = parser.add_subparsers(dest="command", help="trl-jobs commands")
     SFTCommand.register_subcommand(commands_parser)
 
     args, extra_args = parser.parse_known_args()
