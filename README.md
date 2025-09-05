@@ -39,15 +39,42 @@ and any other arguments supported by `trl sft`. Please refer to the [TRL documen
 
 ### Supported Configurations
 
-| Model | Maximum context length | Effective batch size (# of tokens) | Training type | Command |
-| --- | --- | --- | --- | --- |
-| [Qwen/Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B) | 24192 | 48384 | Full | `trl-jobs sft --model_name Qwen/Qwen3-0.6B --dataset_name ...` |
-| [Qwen/Qwen3-1.7B](https://huggingface.co/Qwen/Qwen3-1.7B) | 19584 | 78336 | Full | `trl-jobs sft --model_name Qwen/Qwen3-1.7B --dataset_name ...` |
-| [Qwen/Qwen3-4B](https://huggingface.co/Qwen/Qwen3-4B) | 13888 | 55552 | Full | `trl-jobs sft --model_name Qwen/Qwen3-1.7B --dataset_name ...` |
-| [Qwen/Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B) | 5888 | 94208 | Full | `trl-jobs sft --model_name Qwen/Qwen3-8B --dataset_name ...` |
-| [Qwen/Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B) | TODO | TODO | PEFT (LoRA) | `trl-jobs sft --model_name Qwen/Qwen3-8B --peft --dataset_name ...` |
-| [Qwen/Qwen3-14B](https://huggingface.co/Qwen/Qwen3-14B) | TODO | TODO | PEFT (LoRA) | `trl-jobs sft --model_name Qwen/Qwen3-14B --peft --dataset_name ...` |
-| [Qwen/Qwen3-32B](https://huggingface.co/Qwen/Qwen3-32B) | TODO | TODO | PEFT (LoRA) | `trl-jobs sft --model_name Qwen/Qwen3-32B --peft --dataset_name ...` |
+#### OpenAI GPT-OSS with PEFT
+
+| Model | Maximum context length | # of tokens per effective batch size | Command |
+| --- | --- | --- | --- |
+| [openai/gpt-oss-20b](https://huggingface.co/openai/gpt-oss-20b) | TODO | TODO | `trl-jobs sft --model_name openai/gpt-oss-20b --peft --dataset_name ...` |
+
+#### Meta LLaMA 3
+
+| Model | Maximum context length | # of tokens per effective batch size | Command |
+| --- | --- | --- | --- |
+| [meta-llama/Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B) | 4096 | 262144 | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B --dataset_name ...` |
+| [meta-llama/Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) | 4096 | 262144 | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B-Instruct --dataset_name ...` |
+
+#### Meta LLaMA 3 with PEFT
+
+| Model | Maximum context length | # of tokens per effective batch size | Command |
+| --- | --- | --- | --- |
+| [meta-llama/Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B) | 24576 | TODO | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B --peft --dataset_name ...` |
+| [meta-llama/Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) | 24576 | TODO | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B-Instruct --peft --dataset_name ...` |
+
+#### Qwen3
+
+| Model | Maximum context length | # of tokens per effective batch size | Command |
+| --- | --- | --- | --- |
+| [Qwen/Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B) | 32768 | 65536 | `trl-jobs sft --model_name Qwen/Qwen3-0.6B --dataset_name ...` |
+| [Qwen/Qwen3-1.7B](https://huggingface.co/Qwen/Qwen3-1.7B) | 24576 | 98304 | `trl-jobs sft --model_name Qwen/Qwen3-1.7B --dataset_name ...` |
+| [Qwen/Qwen3-4B](https://huggingface.co/Qwen/Qwen3-4B) | 20480 | 163840 | `trl-jobs sft --model_name Qwen/Qwen3-1.7B --dataset_name ...` |
+| [Qwen/Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B) | 4096 | 262144 | `trl-jobs sft --model_name Qwen/Qwen3-8B --dataset_name ...` |
+
+#### Qwen3 with PEFT
+
+| Model | Maximum context length | # of tokens per effective batch size | Command |
+| --- | --- | --- | --- |
+| [Qwen/Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B) | 24576 | TODO | `trl-jobs sft --model_name Qwen/Qwen3-8B --peft --dataset_name ...` |
+| [Qwen/Qwen3-14B](https://huggingface.co/Qwen/Qwen3-14B) | 20480 | TODO | `trl-jobs sft --model_name Qwen/Qwen3-14B --peft --dataset_name ...` |
+| [Qwen/Qwen3-32B](https://huggingface.co/Qwen/Qwen3-32B) | 4096 | TODO | `trl-jobs sft --model_name Qwen/Qwen3-32B --peft --dataset_name ...` |
 
 ## Authentication
 
@@ -68,5 +95,5 @@ Contributions are welcome! Please open an issue or submit a pull request on GitH
 Run command to check and format code:
 
 ```sh
-ruff check . --fix && ruff format .
+ruff check . --fix && ruff format . --line-length 119
 ```

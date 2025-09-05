@@ -23,10 +23,11 @@ lr_scheduler_type: cosine_with_min_lr
 lr_scheduler_kwargs:
   min_lr_rate: 0.1
 max_grad_norm: 0.2
-max_length: 24192
+max_length: 32768
 output_dir: data/Qwen3-0.6B-SFT
 overwrite_output_dir: true
 packing: true
+pad_to_multiple_of: 4096
 per_device_eval_batch_size: 1
 per_device_train_batch_size: 1
 push_to_hub: true

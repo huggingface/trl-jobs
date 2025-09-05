@@ -14,11 +14,28 @@ logger = logging.get_logger(__name__)
 SUGGESTED_FLAVORS = [item.value for item in SpaceHardware if item.value != "zero-a10g"]
 
 CONFIGS = {
+    # Meta-Llama-3
+    ("meta-llama/Meta-Llama-3-8B", "a100-large", "no_peft"): "Meta-Llama-3-8B-a100-large.yaml",
+    ("meta-llama/Meta-Llama-3-8B-Instruct", "a100-large", "no_peft"): "Meta-Llama-3-8B-Instruct-a100-large.yaml",
+    # Meta-Llama-3 peft
+    ("meta-llama/Meta-Llama-3-8B", "a100-large", "peft"): "Meta-Llama-3-8B-a100-large-peft.yaml",
+    ("meta-llama/Meta-Llama-3-8B-Instruct", "a100-large", "peft"): "Meta-Llama-3-8B-Instruct-a100-large-peft.yaml",
+    # Qwen3
+    ("Qwen/Qwen3-0.6B-Base", "a100-large", "no_peft"): "Qwen3-0.6B-Base-a100-large.yaml",
     ("Qwen/Qwen3-0.6B", "a100-large", "no_peft"): "Qwen3-0.6B-a100-large.yaml",
+    ("Qwen/Qwen3-1.7B-Base", "a100-large", "no_peft"): "Qwen3-1.7B-Base-a100-large.yaml",
     ("Qwen/Qwen3-1.7B", "a100-large", "no_peft"): "Qwen3-1.7B-a100-large.yaml",
+    ("Qwen/Qwen3-4B-Base", "a100-large", "no_peft"): "Qwen3-4B-Base-a100-large.yaml",
     ("Qwen/Qwen3-4B", "a100-large", "no_peft"): "Qwen3-4B-a100-large.yaml",
+    ("Qwen/Qwen3-8B-Base", "a100-large", "no_peft"): "Qwen3-8B-Base-a100-large.yaml",
     ("Qwen/Qwen3-8B", "a100-large", "no_peft"): "Qwen3-8B-a100-large.yaml",
+    # Qwen3 peft
+    ("Qwen/Qwen3-8B-Base", "a100-large", "peft"): "Qwen3-8B-Base-a100-large-peft.yaml",
     ("Qwen/Qwen3-8B", "a100-large", "peft"): "Qwen3-8B-a100-large-peft.yaml",
+    ("Qwen/Qwen3-14B-Base", "a100-large", "peft"): "Qwen3-14B-Base-a100-large-peft.yaml",
+    ("Qwen/Qwen3-14B", "a100-large", "peft"): "Qwen3-14B-a100-large-peft.yaml",
+    ("Qwen/Qwen3-32B-Base", "a100-large", "peft"): "Qwen3-32B-Base-a100-large-peft.yaml",
+    ("Qwen/Qwen3-32B", "a100-large", "peft"): "Qwen3-32B-a100-large-peft.yaml",
 }
 
 
@@ -81,7 +98,13 @@ class SFTCommand:
             config_file = CONFIGS[key]
         else:
             raise ValueError(
-                f"No configuration file found for model {self.model_name}, flavor {self.flavor}, peft {self.peft}."
+                f"❌ No configuration found for:\n"
+                f"   • model: {self.model_name}\n"
+                f"   • flavor: {self.flavor}\n"
+                f"   • peft: {self.peft}\n\n"
+                "Please check that you are using a supported combination. If you think that this configuration should "
+                "be supported, consider opening an issue or submitting a PR:\n"
+                "👉 https://github.com/huggingface/trl-jobs"
             )
 
         # Load YAML file
@@ -93,13 +116,9 @@ class SFTCommand:
         if "hub_model_id" not in args_dict:
             timestamp = time.strftime("%Y%m%d%H%M%S", time.gmtime())
             if self.namespace:
-                args_dict["hub_model_id"] = (
-                    f"{self.namespace}/{self.model_name.split('/')[-1]}-SFT-{timestamp}"
-                )
+                args_dict["hub_model_id"] = f"{self.namespace}/{self.model_name.split('/')[-1]}-SFT-{timestamp}"
             else:
-                args_dict["hub_model_id"] = (
-                    f"{self.model_name.split('/')[-1]}-SFT-{timestamp}"
-                )
+                args_dict["hub_model_id"] = f"{self.model_name.split('/')[-1]}-SFT-{timestamp}"
 
         # Same for run_name
         if "run_name" not in args_dict:
@@ -136,8 +155,9 @@ class SFTCommand:
     def run(self) -> None:
         api = HfApi(token=self.token)
         job = api.run_job(
-            image="qgallouedec/trl",
+            image="qgallouedec/trl:dev",
             command=["trl", "sft", *self.cli_args],
+            env={"TRACKIO_PROJECT": "trl-jobs"},
             secrets={"HF_TOKEN": get_token_to_send(self.token)},
             flavor=self.flavor,
             timeout=self.timeout,
