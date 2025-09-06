@@ -49,7 +49,13 @@ trl-jobs sft --model_name Qwen/Qwen3-0.6B --dataset_name trl-lib/Capybara
 * `--namespace` → Namespace where the job will run (default: your user namespace)
 * `--token` → Hugging Face token (only needed if not logged in)
 
-➡️ You can also pass **any arguments supported by `trl sft`**. For the full list, see the [TRL CLI docs](https://huggingface.co/docs/trl/en/clis).
+➡️ You can also pass **any arguments supported by `trl sft`**. E.g.
+
+```bash
+trl-jobs sft --model_name Qwen/Qwen3-0.6B --dataset_name trl-lib/Capybara --learning_rate 3e-5
+```
+
+For the full list, see the [TRL CLI docs](https://huggingface.co/docs/trl/en/clis).
 
 ## 📊 Supported Configurations
 
@@ -59,7 +65,7 @@ Here are some ready-to-go setups you can use out of the box.
 
 | Model | Max context length | Tokens / batch | Example command |
 | --- | --- | --- | --- |
-| [Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B) | 4096 | 262,144 | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B --dataset_name ...` |
+| [Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B) | 4096 | 262,144 | ```trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B --dataset_name ...``` |
 | [Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) | 4096 | 262,144 | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B-Instruct --dataset_name ...` |
 
 #### 🦙 Meta LLaMA 3 with PEFT
