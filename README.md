@@ -103,7 +103,9 @@ Here are some ready-to-go setups you can use out of the box.
 
 🚧 Coming soon!
 
-💡 Want support for another model? Open an issue or submit a PR—we’d love to hear from you!
+### 💡 Want support for another model?
+
+Open an issue or submit a PR—we’d love to hear from you!
 
 ## 🔑 Authentication
 
