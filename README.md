@@ -1,97 +1,111 @@
-# TRL Jobs
+# 🏭 TRL Jobs
 
-A convenient wrapper around `hfjobs` for running TRL (Transformer Reinforcement Learning) specific workflows on Hugging Face infrastructure.
+**TRL Jobs** is a simple wrapper around [`hfjobs`](https://huggingface.co/docs/huggingface_hub/guides/jobs) that makes it easy to run [TRL](https://huggingface.co/docs/trl/) (Transformer Reinforcement Learning) workflows directly on 🤗 Hugging Face infrastructure.
 
-## Installation
+Think of it as the quickest way to kick off **Supervised Fine-Tuning (SFT)** and more, without worrying about all the boilerplate setup.
+
+## 📦 Installation
+
+Get started with a single command:
 
 ```bash
 pip install trl-jobs
 ```
 
-## Quick Start
+## ⚡ Quick Start
+
+Run your first supervised fine-tuning job in just one line:
 
 ```bash
 trl-jobs sft --model_name Qwen/Qwen3-0.6B --dataset_name trl-lib/Capybara
 ```
 
-## Available Commands
+## 🛠 Available Commands
 
-For now only SFT (Supervised Fine-Tuning) is supported.
+Right now, **SFT (Supervised Fine-Tuning)** is supported. More workflows will be added soon!
 
-### SFT (Supervised Fine-Tuning)
+### 🔹 SFT (Supervised Fine-Tuning)
 
 ```bash
-trl-jobs sft --flavor a100-large --model_name Qwen/Qwen3-0.6B --dataset_name trl-lib/Capybara
+trl-jobs sft --model_name Qwen/Qwen3-0.6B --dataset_name trl-lib/Capybara
 ```
 
-#### Required Arguments
+#### Required arguments
 
-- `--model_name`: Model name (e.g., `Qwen/Qwen3-0.6B`)
-- `--dataset_name`: Dataset name (e.g., `trl-lib/Capybara`)
+* `--model_name` → Model to fine-tune (e.g. `Qwen/Qwen3-0.6B`)
+* `--dataset_name` → Dataset to train on (e.g. `trl-lib/Capybara`)
 
-#### Optional Arguments
+#### Optional arguments
 
-- `--flavor`: Hardware flavor (default: `a100-large`)
-- `-d, --detach`: Run job in background and print job ID
-- `--token`: Hugging Face access token
+* `--peft` → Use [PEFT (LoRA)](https://huggingface.co/docs/peft) (default: `False`)
+* `--flavor` → Hardware flavor (default: `a100-large`, only option for now)
+* `--timeout` → Max runtime (`30m` by default). Supports `s`, `m`, `h`, `d`
+* `-d, --detach` → Run in background and print job ID
+* `--namespace` → Namespace where the job will run (default: your user namespace)
+* `--token` → Hugging Face token (only needed if not logged in)
 
-and any other arguments supported by `trl sft`. Please refer to the [TRL documentation](https://huggingface.co/docs/trl/en/clis)
+➡️ You can also pass **any arguments supported by `trl sft`**. For the full list, see the [TRL CLI docs](https://huggingface.co/docs/trl/en/clis).
 
-### Supported Configurations
+## 📊 Supported Configurations
 
-#### OpenAI GPT-OSS with PEFT
+Here are some ready-to-go setups you can use out of the box.
 
-Coming soon!
+### 🦙 Meta LLaMA 3
 
-#### Meta LLaMA 3
+| Model                                                                                  | Max context length | Tokens / batch | Example command                                                                    |
+| -------------------------------------------------------------------------------------- | ------------------ | -------------- | ---------------------------------------------------------------------------------- |
+| [Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B)                   | 4096               | 262,144        | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B --dataset_name ...`          |
+| [Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) | 4096               | 262,144        | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B-Instruct --dataset_name ...` |
 
-| Model | Maximum context length | # of tokens per effective batch size | Command |
-| --- | --- | --- | --- |
-| [meta-llama/Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B) | 4096 | 262144 | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B --dataset_name ...` |
-| [meta-llama/Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) | 4096 | 262144 | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B-Instruct --dataset_name ...` |
+#### 🦙 Meta LLaMA 3 with PEFT
 
-#### Meta LLaMA 3 with PEFT
+| Model                    | Max context length | Tokens / batch | Example command                                                                           |
+| ------------------------ | ------------------ | -------------- | ----------------------------------------------------------------------------------------- |
+| Meta-Llama-3-8B          | 24,576             | 196,608        | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B --peft --dataset_name ...`          |
+| Meta-Llama-3-8B-Instruct | 24,576             | 196,608        | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B-Instruct --peft --dataset_name ...` |
 
-| Model | Maximum context length | # of tokens per effective batch size | Command |
-| --- | --- | --- | --- |
-| [meta-llama/Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B) | 24576 | 196608 | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B --peft --dataset_name ...` |
-| [meta-llama/Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) | 24576 | 196608 | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B-Instruct --peft --dataset_name ...` |
+### 🐧 Qwen3
 
-#### Qwen3
+| Model                                                | Max context length | Tokens / batch | Example command                                                |
+| ---------------------------------------------------- | ------------------ | -------------- | -------------------------------------------------------------- |
+| [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B) | 32,768             | 65,536         | `trl-jobs sft --model_name Qwen/Qwen3-0.6B --dataset_name ...` |
+| [Qwen3-1.7B](https://huggingface.co/Qwen/Qwen3-1.7B) | 24,576             | 98,304         | `trl-jobs sft --model_name Qwen/Qwen3-1.7B --dataset_name ...` |
+| [Qwen3-4B](https://huggingface.co/Qwen/Qwen3-4B)     | 20,480             | 163,840        | `trl-jobs sft --model_name Qwen/Qwen3-4B --dataset_name ...`   |
+| [Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B)     | 4,096              | 262,144        | `trl-jobs sft --model_name Qwen/Qwen3-8B --dataset_name ...`   |
 
-| Model | Maximum context length | # of tokens per effective batch size | Command |
-| --- | --- | --- | --- |
-| [Qwen/Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B) | 32768 | 65536 | `trl-jobs sft --model_name Qwen/Qwen3-0.6B --dataset_name ...` |
-| [Qwen/Qwen3-1.7B](https://huggingface.co/Qwen/Qwen3-1.7B) | 24576 | 98304 | `trl-jobs sft --model_name Qwen/Qwen3-1.7B --dataset_name ...` |
-| [Qwen/Qwen3-4B](https://huggingface.co/Qwen/Qwen3-4B) | 20480 | 163840 | `trl-jobs sft --model_name Qwen/Qwen3-1.7B --dataset_name ...` |
-| [Qwen/Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B) | 4096 | 262144 | `trl-jobs sft --model_name Qwen/Qwen3-8B --dataset_name ...` |
+#### 🐧 Qwen3 with PEFT
 
-#### Qwen3 with PEFT
+| Model     | Max context length | Tokens / batch | Example command                                                      |
+| --------- | ------------------ | -------------- | -------------------------------------------------------------------- |
+| Qwen3-8B  | 24,576             | 196,608        | `trl-jobs sft --model_name Qwen/Qwen3-8B --peft --dataset_name ...`  |
+| Qwen3-14B | 20,480             | 163,840        | `trl-jobs sft --model_name Qwen/Qwen3-14B --peft --dataset_name ...` |
+| Qwen3-32B | 4,096              | 131,072        | `trl-jobs sft --model_name Qwen/Qwen3-32B --peft --dataset_name ...` |
 
-| Model | Maximum context length | # of tokens per effective batch size | Command |
-| --- | --- | --- | --- |
-| [Qwen/Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B) | 24576 | 196608 | `trl-jobs sft --model_name Qwen/Qwen3-8B --peft --dataset_name ...` |
-| [Qwen/Qwen3-14B](https://huggingface.co/Qwen/Qwen3-14B) | 20480 | 163840 | `trl-jobs sft --model_name Qwen/Qwen3-14B --peft --dataset_name ...` |
-| [Qwen/Qwen3-32B](https://huggingface.co/Qwen/Qwen3-32B) | 4096 | 131072 | `trl-jobs sft --model_name Qwen/Qwen3-32B --peft --dataset_name ...` |
+### 🤖 OpenAI GPT-OSS (with PEFT)
 
-## Authentication
+🚧 Coming soon!
 
-You can provide your Hugging Face token in several ways:
+💡 Want support for another model? Open an issue or submit a PR—we’d love to hear from you!
 
-1. Using `huggingface-hub` login: `huggingface-cli login`
-2. Setting the `HF_TOKEN` environment variable
-3. Using the `--token` argument
+## 🔑 Authentication
 
-## License
+You’ll need a Hugging Face token to run jobs. You can provide it in any of these ways:
 
-MIT License - see LICENSE file for details.
+1. Login with `huggingface-cli login`
+2. Set the environment variable `HF_TOKEN`
+3. Pass it directly with `--token`
 
-## Contributing
+## 📜 License
 
-Contributions are welcome! Please open an issue or submit a pull request on GitHub.
+This project is under the **MIT License**. See the [LICENSE](./LICENSE) file for details.
 
-Run command to check and format code:
+## 🤝 Contributing
 
-```sh
+We welcome contributions!
+Please open an issue or a PR on GitHub.
+
+Before committing, run formatting checks:
+
+```bash
 ruff check . --fix && ruff format . --line-length 119
 ```
