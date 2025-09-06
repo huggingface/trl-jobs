@@ -41,9 +41,7 @@ and any other arguments supported by `trl sft`. Please refer to the [TRL documen
 
 #### OpenAI GPT-OSS with PEFT
 
-| Model | Maximum context length | # of tokens per effective batch size | Command |
-| --- | --- | --- | --- |
-| [openai/gpt-oss-20b](https://huggingface.co/openai/gpt-oss-20b) | TODO | TODO | `trl-jobs sft --model_name openai/gpt-oss-20b --peft --dataset_name ...` |
+Coming soon!
 
 #### Meta LLaMA 3
 
@@ -56,8 +54,8 @@ and any other arguments supported by `trl sft`. Please refer to the [TRL documen
 
 | Model | Maximum context length | # of tokens per effective batch size | Command |
 | --- | --- | --- | --- |
-| [meta-llama/Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B) | 24576 | TODO | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B --peft --dataset_name ...` |
-| [meta-llama/Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) | 24576 | TODO | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B-Instruct --peft --dataset_name ...` |
+| [meta-llama/Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B) | 24576 | 196608 | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B --peft --dataset_name ...` |
+| [meta-llama/Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) | 24576 | 196608 | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B-Instruct --peft --dataset_name ...` |
 
 #### Qwen3
 
@@ -72,8 +70,8 @@ and any other arguments supported by `trl sft`. Please refer to the [TRL documen
 
 | Model | Maximum context length | # of tokens per effective batch size | Command |
 | --- | --- | --- | --- |
-| [Qwen/Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B) | 24576 | TODO | `trl-jobs sft --model_name Qwen/Qwen3-8B --peft --dataset_name ...` |
-| [Qwen/Qwen3-14B](https://huggingface.co/Qwen/Qwen3-14B) | 20480 | TODO | `trl-jobs sft --model_name Qwen/Qwen3-14B --peft --dataset_name ...` |
+| [Qwen/Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B) | 24576 | 196608 | `trl-jobs sft --model_name Qwen/Qwen3-8B --peft --dataset_name ...` |
+| [Qwen/Qwen3-14B](https://huggingface.co/Qwen/Qwen3-14B) | 20480 | 327680 | `trl-jobs sft --model_name Qwen/Qwen3-14B --peft --dataset_name ...` |
 | [Qwen/Qwen3-32B](https://huggingface.co/Qwen/Qwen3-32B) | 4096 | TODO | `trl-jobs sft --model_name Qwen/Qwen3-32B --peft --dataset_name ...` |
 
 ## Authentication
