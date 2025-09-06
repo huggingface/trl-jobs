@@ -20,6 +20,13 @@ Run your first supervised fine-tuning job in just one line:
 trl-jobs sft --model_name Qwen/Qwen3-0.6B --dataset_name trl-lib/Capybara
 ```
 
+Th training is tracked with [Trackio](https://huggingface.co/docs/trackio/index) and the fine-tuned model is automatically pushed to the Hub.
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start;">
+  <img src="https://huggingface.co/datasets/trl-lib/documentation-images/resolve/main/trackio_sft.gif" alt="trackio_sft" style="max-width: 48%; height: auto;">
+  <img src="https://huggingface.co/datasets/trl-lib/documentation-images/resolve/main/trained_model_sft.png" alt="trained_model_sft" style="max-width: 48%; height: auto;">
+</div>
+
 ## 🛠 Available Commands
 
 Right now, **SFT (Supervised Fine-Tuning)** is supported. More workflows will be added soon!
@@ -39,7 +46,7 @@ trl-jobs sft --model_name Qwen/Qwen3-0.6B --dataset_name trl-lib/Capybara
 
 * `--peft` → Use [PEFT (LoRA)](https://huggingface.co/docs/peft) (default: `False`)
 * `--flavor` → Hardware flavor (default: `a100-large`, only option for now)
-* `--timeout` → Max runtime (`30m` by default). Supports `s`, `m`, `h`, `d`
+* `--timeout` → Max runtime (`1h` by default). Supports `s`, `m`, `h`, `d`
 * `-d, --detach` → Run in background and print job ID
 * `--namespace` → Namespace where the job will run (default: your user namespace)
 * `--token` → Hugging Face token (only needed if not logged in)

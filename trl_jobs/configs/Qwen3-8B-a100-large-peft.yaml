@@ -25,6 +25,7 @@ lr_scheduler_kwargs:
   min_lr_rate: 0.1
 max_grad_norm: 0.2
 max_length: 24576
+num_train_epochs: 1
 output_dir: data/Qwen3-8B-SFT
 overwrite_output_dir: true
 packing: true

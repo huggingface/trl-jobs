@@ -62,6 +62,7 @@ class SFTCommand:
         )
         sft_parser.add_argument(
             "--timeout",
+            default="1h",
             type=str,
             help="Max duration: int/float with s (seconds, default), m (minutes), h (hours) or d (days).",
         )
@@ -157,7 +158,7 @@ class SFTCommand:
         job = api.run_job(
             image="qgallouedec/trl:dev",
             command=["trl", "sft", *self.cli_args],
-            env={"TRACKIO_PROJECT": "trl-jobs"},
+            env={"TRACKIO_PROJECT": "trl-jobs2"},
             secrets={"HF_TOKEN": get_token_to_send(self.token)},
             flavor=self.flavor,
             timeout=self.timeout,
