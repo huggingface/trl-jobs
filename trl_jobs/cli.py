@@ -119,6 +119,7 @@ class SFTCommand:
             )
             args_dict = {}
             args_dict["model_name_or_path"] = self.model_name
+            args_dict["use_peft"] = self.peft
 
         # Add our own hub_model_id to avoid overwriting a previously trained model
         if "hub_model_id" not in args_dict:
