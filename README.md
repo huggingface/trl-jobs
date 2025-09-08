@@ -96,7 +96,6 @@ Here are some ready-to-go setups you can use out of the box.
 | [Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B) | 24,576 | 196,608 | `trl-jobs sft --model_name Qwen/Qwen3-8B --peft --dataset_name ...` |
 | [Qwen3-14B-Base](https://huggingface.co/Qwen/Qwen3-14B) | 20,480 | 163,840 | `trl-jobs sft --model_name Qwen/Qwen3-14B-Base --peft --dataset_name ...` |
 | [Qwen3-14B](https://huggingface.co/Qwen/Qwen3-14B) | 20,480 | 163,840 | `trl-jobs sft --model_name Qwen/Qwen3-14B --peft --dataset_name ...` |
-| [Qwen3-32B-Base](https://huggingface.co/Qwen/Qwen3-32B) | 4,096 | 131,072 | `trl-jobs sft --model_name Qwen/Qwen3-32B-Base --peft --dataset_name ...` |
 | [Qwen3-32B](https://huggingface.co/Qwen/Qwen3-32B) | 4,096 | 131,072 | `trl-jobs sft --model_name Qwen/Qwen3-32B --peft --dataset_name ...` |
 
 ### 🤖 OpenAI GPT-OSS (with PEFT)

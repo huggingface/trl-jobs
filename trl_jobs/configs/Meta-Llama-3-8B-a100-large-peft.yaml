@@ -1,3 +1,9 @@
+# Accelerator arguments
+num_processes: 1
+num_machines: 1
+mixed_precision: 'no'
+dynamo_backend: 'no'
+
 # Model arguments
 model_name_or_path: meta-llama/Meta-Llama-3-8B
 model_revision: main
