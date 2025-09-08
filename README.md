@@ -68,7 +68,7 @@ Here are some ready-to-go setups you can use out of the box.
 | [Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B) | 4096 | 262,144 | ```trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B --dataset_name ...``` |
 | [Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) | 4096 | 262,144 | `trl-jobs sft --model_name meta-llama/Meta-Llama-3-8B-Instruct --dataset_name ...` |
 
-#### 🦙 Meta LLaMA 3 with PEFT
+### 🦙 Meta LLaMA 3 with PEFT
 
 | Model | Max context length | Tokens / batch | Example command |
 | --- | --- | --- | --- |
@@ -92,9 +92,9 @@ Here are some ready-to-go setups you can use out of the box.
 
 | Model | Max context length | Tokens / batch | Example command |
 | --- | --- | --- | --- |
-| [Qwen3-8B-Base](https://huggingface.co/Qwen/Qwen3-8B) | 24,576 | 196,608 | `trl-jobs sft --model_name Qwen/Qwen3-8B-Base --peft --dataset_name ...` |
+| [Qwen3-8B-Base](https://huggingface.co/Qwen/Qwen3-8B-Base) | 24,576 | 196,608 | `trl-jobs sft --model_name Qwen/Qwen3-8B-Base --peft --dataset_name ...` |
 | [Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B) | 24,576 | 196,608 | `trl-jobs sft --model_name Qwen/Qwen3-8B --peft --dataset_name ...` |
-| [Qwen3-14B-Base](https://huggingface.co/Qwen/Qwen3-14B) | 20,480 | 163,840 | `trl-jobs sft --model_name Qwen/Qwen3-14B-Base --peft --dataset_name ...` |
+| [Qwen3-14B-Base](https://huggingface.co/Qwen/Qwen3-14B-Base) | 20,480 | 163,840 | `trl-jobs sft --model_name Qwen/Qwen3-14B-Base --peft --dataset_name ...` |
 | [Qwen3-14B](https://huggingface.co/Qwen/Qwen3-14B) | 20,480 | 163,840 | `trl-jobs sft --model_name Qwen/Qwen3-14B --peft --dataset_name ...` |
 | [Qwen3-32B](https://huggingface.co/Qwen/Qwen3-32B) | 4,096 | 131,072 | `trl-jobs sft --model_name Qwen/Qwen3-32B --peft --dataset_name ...` |
 
