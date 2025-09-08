@@ -8,6 +8,8 @@ import yaml
 from huggingface_hub import HfApi, SpaceHardware
 from huggingface_hub.utils import get_token_to_send, logging
 
+import warnings
+
 logger = logging.get_logger(__name__)
 
 
@@ -97,21 +99,27 @@ class SFTCommand:
         key = (self.model_name, self.flavor, "peft" if self.peft else "no_peft")
         if key in CONFIGS:
             config_file = CONFIGS[key]
+            # Load YAML file
+            config_file = files("trl_jobs.configs").joinpath(config_file)
+            with open(config_file, "r") as f:
+                args_dict = yaml.safe_load(f)
         else:
-            raise ValueError(
+            warnings.warn(
                 f"❌ No configuration found for:\n"
                 f"   • model: {self.model_name}\n"
                 f"   • flavor: {self.flavor}\n"
                 f"   • peft: {self.peft}\n\n"
-                "Please check that you are using a supported combination. If you think that this configuration should "
-                "be supported, consider opening an issue or submitting a PR:\n"
-                "👉 https://github.com/huggingface/trl-jobs"
+                "⚠️  No optimal configuration found. The job will still be launched "
+                "using the CLI flags provided by the user, but optimal performance "
+                "is not guaranteed.\n"
+                "👉 If you think this configuration should be supported, consider "
+                "opening an issue or submitting a PR:\n"
+                "https://github.com/huggingface/trl-jobs",
+                UserWarning,
             )
-
-        # Load YAML file
-        config_file = files("trl_jobs.configs").joinpath(config_file)
-        with open(config_file, "r") as f:
-            args_dict = yaml.safe_load(f)
+            args_dict = {}
+            args_dict["model_name_or_path"] = self.model_name
+            args_dict["use_peft"] = self.peft
 
         # Add our own hub_model_id to avoid overwriting a previously trained model
         if "hub_model_id" not in args_dict:
