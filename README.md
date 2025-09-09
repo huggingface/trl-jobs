@@ -1,6 +1,6 @@
 # 🏭 TRL Jobs
 
-**TRL Jobs** is a simple wrapper around [`hfjobs`](https://huggingface.co/docs/huggingface_hub/guides/jobs) that makes it easy to run [TRL](https://huggingface.co/docs/trl/) (Transformer Reinforcement Learning) workflows directly on 🤗 Hugging Face infrastructure.
+**TRL Jobs** is a simple wrapper around [Hugging Face Jobs](https://huggingface.co/docs/huggingface_hub/guides/jobs) that makes it easy to run [TRL](https://huggingface.co/docs/trl/) (Transformer Reinforcement Learning) workflows directly on 🤗 Hugging Face infrastructure.
 
 Think of it as the quickest way to kick off **Supervised Fine-Tuning (SFT)** and more, without worrying about all the boilerplate setup.
 
