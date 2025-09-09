@@ -21,8 +21,8 @@ classifiers = [
 dynamic = ["version"]
 
 [project.urls]
-homepage = "https://github.com/qgallouedec/trl-jobs"
-repository = "https://github.com/qgallouedec/trl-jobs"
+homepage = "https://github.com/huggingface/trl-jobs"
+repository = "https://github.com/huggingface/trl-jobs"
 
 [project.scripts]
 trl-jobs = "trl_jobs.cli:main"
