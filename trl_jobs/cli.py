@@ -164,9 +164,9 @@ class SFTCommand:
     def run(self) -> None:
         api = HfApi(token=self.token)
         job = api.run_job(
-            image="qgallouedec/trl:dev",
+            image="huggingface/trl-source-gpu:dev",
             command=["trl", "sft", *self.cli_args],
-            env={"TRACKIO_PROJECT": "trl-jobs2"},
+            env={"TRACKIO_PROJECT": "trl-jobs"},
             secrets={"HF_TOKEN": get_token_to_send(self.token)},
             flavor=self.flavor,
             timeout=self.timeout,
