@@ -57,6 +57,47 @@ trl-jobs sft --model_name Qwen/Qwen3-0.6B --dataset_name trl-lib/Capybara --lear
 
 For the full list, see the [TRL CLI docs](https://huggingface.co/docs/trl/en/clis).
 
+#### Dataset format
+
+SFT supports various 4 dataset formats.
+
+* Standard language modeling
+
+  ```json
+  example = {"text": "The sky is blue."}
+  ```
+
+* Standard prompt-completion
+
+  ```json
+  example = {"prompt": "The sky is", "completion": " blue."}
+  ```
+
+* Conversationanl language modeling
+
+    ```json
+    example = {"messages": [
+        {"role": "user", "content": "What color is the sky?"},
+        {"role": "assistant", "content": "It is blue."}
+    ]}
+    ```
+
+* Conversational prompt-completion
+
+    ```json
+    example = {"prompt": [{"role": "user", "content": "What color is the sky?"}],
+               "completion": [{"role": "assistant", "content": "It is blue."}]}
+    ```
+
+> [!IMPORTANT]
+> When using conversational dataset, ensure that the model has a chat template.
+
+> [!NOTE]
+> When using prompt-completion dataset, the loss is only computed on the completion part.
+
+For more details, see the [TRL docs - Dataset formats](https://huggingface.co/docs/trl/en/dataset_formats#language-modeling).
+
+
 ## 📊 Supported Configurations
 
 Here are some ready-to-go setups you can use out of the box.
