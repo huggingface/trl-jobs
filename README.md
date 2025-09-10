@@ -63,19 +63,19 @@ SFT supports various 4 dataset formats.
 
 * Standard language modeling
 
-  ```json
+  ```python
   example = {"text": "The sky is blue."}
   ```
 
 * Standard prompt-completion
 
-  ```json
+  ```python
   example = {"prompt": "The sky is", "completion": " blue."}
   ```
 
 * Conversationanl language modeling
 
-    ```json
+    ```python
     example = {"messages": [
         {"role": "user", "content": "What color is the sky?"},
         {"role": "assistant", "content": "It is blue."}
@@ -84,7 +84,7 @@ SFT supports various 4 dataset formats.
 
 * Conversational prompt-completion
 
-    ```json
+    ```python
     example = {"prompt": [{"role": "user", "content": "What color is the sky?"}],
                "completion": [{"role": "assistant", "content": "It is blue."}]}
     ```
