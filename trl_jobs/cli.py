@@ -38,6 +38,9 @@ CONFIGS = {
     ("Qwen/Qwen3-14B", "a100-large", "peft"): "Qwen3-14B-a100-large-peft.yaml",
     ("Qwen/Qwen3-32B-Base", "a100-large", "peft"): "Qwen3-32B-Base-a100-large-peft.yaml",
     ("Qwen/Qwen3-32B", "a100-large", "peft"): "Qwen3-32B-a100-large-peft.yaml",
+    # SmolLM3
+    ("HuggingFaceTB/SmolLM3-3B-Base", "a100-large", "no_peft"): "SmolLM3-3B-Base-a100-large.yaml",
+    ("HuggingFaceTB/SmolLM3-3B", "a100-large", "no_peft"): "SmolLM3-3B-a100-large.yaml",
 }
 
 

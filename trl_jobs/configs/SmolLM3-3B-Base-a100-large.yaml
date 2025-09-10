@@ -5,7 +5,7 @@ mixed_precision: 'no'
 dynamo_backend: 'no'
 
 # Model arguments
-model_name_or_path: Qwen/Qwen3-0.6B-Base
+model_name_or_path: HuggingFaceTB/SmolLM3-3B-Base
 model_revision: main
 torch_dtype: bfloat16
 attn_implementation: flash_attention_2
@@ -17,7 +17,7 @@ dataset_num_proc: 96
 bf16: true
 do_eval: false
 eval_strategy: 'no'
-gradient_accumulation_steps: 2
+gradient_accumulation_steps: 4
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: false
@@ -29,9 +29,9 @@ lr_scheduler_type: cosine_with_min_lr
 lr_scheduler_kwargs:
   min_lr_rate: 0.1
 max_grad_norm: 0.2
-max_length: 32768
+max_length: 28672
 num_train_epochs: 1
-output_dir: data/Qwen3-0.6B-Base-SFT
+output_dir: data/SmolLM3-3B-Base-SFT
 overwrite_output_dir: true
 packing: true
 pad_to_multiple_of: 4096
@@ -39,7 +39,7 @@ per_device_eval_batch_size: 1
 per_device_train_batch_size: 1
 push_to_hub: true
 report_to: trackio
-save_steps: 150
+save_steps: 1
 save_strategy: steps
 save_total_limit: 1
 seed: 42

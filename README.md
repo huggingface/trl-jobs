@@ -139,6 +139,13 @@ Here are some ready-to-go setups you can use out of the box.
 | [Qwen3-14B](https://huggingface.co/Qwen/Qwen3-14B) | 20,480 | 163,840 | `trl-jobs sft --model_name Qwen/Qwen3-14B --peft --dataset_name ...` |
 | [Qwen3-32B](https://huggingface.co/Qwen/Qwen3-32B) | 4,096 | 131,072 | `trl-jobs sft --model_name Qwen/Qwen3-32B --peft --dataset_name ...` |
 
+SmolLM3
+
+| Model | Max context length | Tokens / batch | Example command |
+| --- | --- | --- | --- |
+| [HuggingFaceTB/SmolLM3-3B-Base](https://huggingface.co/HuggingFaceTB/SmolLM3-3B-Base) | 28,672 | 114,688 | `trl-jobs sft --model_name HuggingFaceTB/SmolLM3-3B --dataset_name ...` |
+| [HuggingFaceTB/SmolLM3-3B](https://huggingface.co/HuggingFaceTB/SmolLM3-3B) | 28,672 | 114,688 | `trl-jobs sft --model_name HuggingFaceTB/SmolLM3-3B --dataset_name ...` |
+
 ### 🤖 OpenAI GPT-OSS (with PEFT)
 
 🚧 Coming soon!
