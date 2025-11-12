@@ -169,7 +169,6 @@ class SFTCommand:
         job = api.run_job(
             image="huggingface/trl",
             command=["trl", "sft", *self.cli_args],
-            env={"TRACKIO_PROJECT": "trl-jobs"},
             secrets={"HF_TOKEN": get_token_to_send(self.token)},
             flavor=self.flavor,
             timeout=self.timeout,

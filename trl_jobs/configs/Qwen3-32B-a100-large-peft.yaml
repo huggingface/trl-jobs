@@ -7,8 +7,8 @@ dynamo_backend: 'no'
 # Model arguments
 model_name_or_path: Qwen/Qwen3-32B
 model_revision: main
-torch_dtype: bfloat16
-attn_implementation: flash_attention_2
+dtype: bfloat16
+attn_implementation: kernels-community/flash-attn2
 use_peft: true
 
 # Data training arguments
@@ -46,3 +46,6 @@ save_total_limit: 1
 seed: 42
 # use_liger_kernel: true # liger not supported
 warmup_ratio: 0.03
+
+# Logging arguments
+project: trl-jobs
