@@ -43,7 +43,7 @@ save_steps: 20
 save_strategy: steps
 save_total_limit: 1
 seed: 42
-# use_liger_kernel: true # liger not supported
+use_liger_kernel: true
 warmup_ratio: 0.03
 
 # Logging arguments
