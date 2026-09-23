@@ -22,7 +22,9 @@ jobs:
         run: echo "version=$(cat trl_jobs/version.txt)" >> $GITHUB_OUTPUT
 
       - name: Debug - Show version.txt content
-        run: echo "Version is ${{ steps.get_version.outputs.version }}"
+        run: echo "Version is ${STEPS_GET_VERSION_OUTPUTS_VERSION}"
+        env:
+          STEPS_GET_VERSION_OUTPUTS_VERSION: ${{ steps.get_version.outputs.version }}
 
       - name: Set up Python
         uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c  # v4
